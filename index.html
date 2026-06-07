@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>ARCHIVE ROOM — Thrift Shoes</title>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black:   #1a1410;
+      --white:   #f2e8d5;
+      --cream:   #e8d9be;
+      --lime:    #d4a017;
+      --orange:  #b5451b;
+      --sand:    #a89070;
+      --mid:     #2e2419;
+      --border:  rgba(242,232,213,0.15);
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 16px;
+      overflow-x: hidden;
+    }
+
+    /* GRAIN */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.035'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    /* ══ NAV ══ */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 500;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 1.2rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      backdrop-filter: blur(12px);
+      background: rgba(10,10,10,0.85);
+    }
+    .nav-logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.6rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+    }
+    .nav-logo span { color: var(--lime); }
+    .nav-links {
+      display: flex;
+      gap: 2.5rem;
+      list-style: none;
+    }
+    .nav-links a {
+      color: var(--sand);
+      text-decoration: none;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--lime); }
+    .nav-cart {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.85rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--white);
+      background: var(--orange);
+      color: var(--white);
+      padding: 0.55rem 1.3rem;
+      cursor: pointer;
+      transition: background 0.25s;
+      border: none;
+      font-weight: 700;
+    }
+    .nav-cart:hover { background: #c95520; }
+
+    /* ══ HERO ══ */
+    .hero {
+      min-height: 100vh;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      padding-top: 70px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    /* Diagonal slash divider */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 0; bottom: 0;
+      left: 50%;
+      width: 120px;
+      background: var(--black);
+      transform: skewX(-4deg) translateX(-50%);
+      z-index: 2;
+    }
+
+    .hero-left {
+      background: var(--mid);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 4rem 3rem 4rem 4rem;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero-left-img {
+      position: absolute;
+      inset: 0;
+      background: url('https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=900&q=80') center/cover no-repeat;
+      filter: brightness(0.45) saturate(0.7);
+      transition: transform 8s ease;
+    }
+    .hero:hover .hero-left-img { transform: scale(1.04); }
+
+    .hero-tag {
+      position: absolute;
+      top: 2rem; left: 2.5rem;
+      background: var(--lime);
+      color: var(--black);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.9rem;
+      z-index: 3;
+    }
+
+    .hero-left-content {
+      position: relative;
+      z-index: 3;
+    }
+    .hero-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 10rem;
+      line-height: 1;
+      color: rgba(245,240,232,0.06);
+      position: absolute;
+      bottom: 3rem; right: 1rem;
+      pointer-events: none;
+      z-index: 1;
+    }
+    .hero-left h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 9vw, 8rem);
+      line-height: 0.92;
+      letter-spacing: 0.03em;
+      color: var(--white);
+      position: relative;
+      z-index: 3;
+      animation: slideUp 1s 0.2s both;
+    }
+    .hero-left h1 em {
+      font-style: normal;
+      color: var(--lime);
+      display: block;
+    }
+    .hero-left p {
+      font-size: 0.9rem;
+      color: var(--sand);
+      max-width: 300px;
+      line-height: 1.7;
+      margin: 1rem 0 2rem;
+      font-weight: 300;
+      position: relative;
+      z-index: 3;
+      animation: slideUp 1s 0.5s both;
+    }
+    .hero-btn {
+      display: inline-block;
+      padding: 1rem 2.2rem;
+      background: var(--orange);
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      text-decoration: none;
+      transition: background 0.3s, transform 0.2s;
+      position: relative;
+      z-index: 3;
+      animation: slideUp 1s 0.7s both;
+    }
+    .hero-btn:hover { background: #c95520; transform: translateY(-3px); }
+
+    .hero-right {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 4rem 4rem 4rem 5rem;
+      position: relative;
+      background: var(--black);
+    }
+    .hero-right-eyebrow {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 1.5rem;
+      animation: slideUp 1s 0.4s both;
+    }
+    .hero-right h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 5vw, 5rem);
+      letter-spacing: 0.05em;
+      line-height: 1;
+      color: var(--white);
+      margin-bottom: 1.5rem;
+      animation: slideUp 1s 0.6s both;
+    }
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-top: 2rem;
+      animation: slideUp 1s 0.9s both;
+    }
+    .stat {
+      border-left: 2px solid var(--lime);
+      padding-left: 1rem;
+    }
+    .stat-num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2.5rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .stat-label {
+      font-size: 0.75rem;
+      color: var(--sand);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 300;
+    }
+    .hero-right-img {
+      margin-top: 2.5rem;
+      height: 220px;
+      overflow: hidden;
+      position: relative;
+      animation: slideUp 1s 1.1s both;
+    }
+    .hero-right-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.8) brightness(0.9);
+      transition: transform 6s ease;
+    }
+    .hero:hover .hero-right-img img { transform: scale(1.05); }
+    .hero-right-img-label {
+      position: absolute;
+      bottom: 0.8rem; right: 0.8rem;
+      background: var(--orange);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.35rem 0.8rem;
+      color: var(--white);
+    }
+
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ══ TICKER ══ */
+    .ticker {
+      background: var(--orange);
+      color: var(--white);
+      overflow: hidden;
+      padding: 0.75rem 0;
+      white-space: nowrap;
+    }
+    .ticker-track {
+      display: inline-block;
+      animation: ticker 18s linear infinite;
+    }
+    .ticker-track span {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.2em;
+      margin-right: 4rem;
+    }
+    .ticker-track .dot {
+      color: var(--lime);
+      margin-right: 4rem;
+    }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+    /* ══ DROPS / NEW IN ══ */
+    .drops {
+      padding: 6rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .section-header {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      margin-bottom: 3rem;
+    }
+    .section-header h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(3rem, 6vw, 5.5rem);
+      letter-spacing: 0.04em;
+      line-height: 1;
+      color: var(--white);
+    }
+    .section-header h2 span { color: var(--lime); }
+    .section-header a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--sand);
+      text-decoration: none;
+      border-bottom: 1px solid var(--sand);
+      padding-bottom: 2px;
+      transition: color 0.25s, border-color 0.25s;
+    }
+    .section-header a:hover { color: var(--lime); border-color: var(--lime); }
+
+    .drops-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5px;
+    }
+    .drop-card {
+      position: relative;
+      background: var(--mid);
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .drop-card:first-child {
+      grid-row: span 2;
+    }
+    .drop-img {
+      width: 100%;
+      aspect-ratio: 1;
+      overflow: hidden;
+    }
+    .drop-card:first-child .drop-img {
+      aspect-ratio: auto;
+      height: 100%;
+    }
+    .drop-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.85);
+      transition: transform 0.6s ease, filter 0.4s ease;
+    }
+    .drop-card:hover .drop-img img {
+      transform: scale(1.07);
+      filter: saturate(1.1);
+    }
+    .drop-info {
+      padding: 1rem 1.2rem 1.2rem;
+    }
+    .drop-badge {
+      display: inline-block;
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.25rem 0.6rem;
+      margin-bottom: 0.5rem;
+    }
+    .badge-new   { background: #5a7a3a;   color: #f2e8d5; }
+    .badge-rare  { background: var(--orange); color: var(--white); }
+    .badge-heat  { background: var(--lime);       color: #1a1410; }
+    .drop-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+      text-transform: uppercase;
+    }
+    .drop-size {
+      font-size: 0.75rem;
+      color: var(--sand);
+      margin-top: 0.2rem;
+      font-weight: 300;
+    }
+    .drop-price {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 0.8rem;
+    }
+    .price-tag {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.4rem;
+      letter-spacing: 0.05em;
+      color: var(--lime);
+    }
+    .price-original {
+      font-size: 0.75rem;
+      color: var(--sand);
+      text-decoration: line-through;
+      margin-left: 0.4rem;
+    }
+    .add-btn {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--white);
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      font-weight: 700;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      padding: 0.4rem 0.8rem;
+      cursor: pointer;
+      transition: background 0.25s, border-color 0.25s;
+    }
+    .add-btn:hover { background: var(--lime); color: var(--white); border-color: var(--lime); }
+
+    /* ══ BRANDS STRIP ══ */
+    .brands {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex;
+      gap: 4rem;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      overflow: hidden;
+    }
+    .brand-name {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.8rem;
+      letter-spacing: 0.15em;
+      color: rgba(245,240,232,0.15);
+      transition: color 0.3s;
+      cursor: default;
+    }
+    .brand-name:hover { color: var(--white); }
+
+    /* ══ CATEGORIES ══ */
+    .categories {
+      padding: 6rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .cat-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr;
+      grid-template-rows: 280px 280px;
+      gap: 4px;
+      margin-top: 3rem;
+    }
+    .cat-item {
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+    .cat-item.tall { grid-row: span 2; }
+    .cat-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: brightness(0.5) saturate(0.7);
+      transition: transform 0.7s ease, filter 0.5s ease;
+    }
+    .cat-item:hover img {
+      transform: scale(1.08);
+      filter: brightness(0.65) saturate(0.9);
+    }
+    .cat-label {
+      position: absolute;
+      bottom: 1.5rem; left: 1.5rem;
+      z-index: 2;
+    }
+    .cat-label h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.06em;
+      color: var(--white);
+      line-height: 1;
+    }
+    .cat-label p {
+      font-size: 0.75rem;
+      color: var(--sand);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      font-weight: 300;
+      margin-top: 0.2rem;
+    }
+    .cat-item::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.8) 0%, transparent 60%);
+    }
+    .cat-label { z-index: 3; }
+
+    /* ══ WHY US STRIP ══ */
+    .why-strip {
+      background: var(--mid);
+      padding: 4rem 2.5rem;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+    }
+    .why-card {
+      text-align: center;
+      padding: 1.5rem;
+    }
+    .why-icon { font-size: 2rem; margin-bottom: 1rem; display: block; }
+    .why-card h4 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.2rem;
+      letter-spacing: 0.1em;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .why-card p {
+      font-size: 0.82rem;
+      color: var(--sand);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ══ BEST SELLERS ══ */
+    .bestsellers {
+      padding: 6rem 2.5rem;
+      max-width: 1300px;
+      margin: 0 auto;
+    }
+    .bs-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2px;
+      margin-top: 3rem;
+    }
+    .bs-card {
+      background: var(--mid);
+      display: flex;
+      flex-direction: column;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.4s;
+    }
+    .bs-card:hover { transform: translateY(-6px); }
+    .bs-img {
+      height: 260px;
+      overflow: hidden;
+    }
+    .bs-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      filter: saturate(0.8);
+      transition: transform 0.6s, filter 0.4s;
+    }
+    .bs-card:hover .bs-img img { transform: scale(1.06); filter: saturate(1.05); }
+    .bs-body {
+      padding: 1.2rem 1.5rem 1.5rem;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    .bs-brand {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.7rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--lime);
+      margin-bottom: 0.3rem;
+    }
+    .bs-name {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1.1rem;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--white);
+    }
+    .bs-condition {
+      font-size: 0.75rem;
+      color: var(--sand);
+      font-weight: 300;
+      margin-top: 0.2rem;
+    }
+    .bs-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: auto;
+      padding-top: 1rem;
+      border-top: 1px solid var(--border);
+    }
+    .bs-price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      letter-spacing: 0.05em;
+      color: var(--white);
+    }
+    .bs-sizes {
+      display: flex;
+      gap: 0.3rem;
+      flex-wrap: wrap;
+    }
+    .sz {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      border: 1px solid var(--border);
+      padding: 0.15rem 0.4rem;
+      color: var(--sand);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+    .sz:hover { border-color: var(--lime); color: var(--lime); }
+    .sz.avail { border-color: var(--lime); color: var(--lime); }
+
+    /* ══ QUOTE BANNER ══ */
+    .quote-sec {
+      padding: 7rem 2.5rem;
+      text-align: center;
+      position: relative;
+      background: linear-gradient(135deg, #0f0f0f 0%, #141414 50%, #0a0a0a 100%);
+      overflow: hidden;
+    }
+    .quote-bg-text {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 20vw;
+      color: rgba(200,240,74,0.03);
+      pointer-events: none;
+      letter-spacing: 0.1em;
+      white-space: nowrap;
+    }
+    .quote-sec blockquote {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 5rem);
+      letter-spacing: 0.06em;
+      line-height: 1.1;
+      color: var(--white);
+      max-width: 900px;
+      margin: 0 auto 2rem;
+      position: relative;
+      z-index: 1;
+    }
+    .quote-sec blockquote span { color: var(--lime); }
+    .quote-sec cite {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.8rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--sand);
+      position: relative;
+      z-index: 1;
+    }
+
+    /* ══ HOW IT WORKS ══ */
+    .how {
+      padding: 6rem 2.5rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+    .how-steps {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2rem;
+      margin-top: 3rem;
+      position: relative;
+    }
+    .how-steps::before {
+      content: '';
+      position: absolute;
+      top: 2rem; left: 2.5rem; right: 2.5rem;
+      height: 1px;
+      background: linear-gradient(to right, var(--lime), var(--orange));
+      z-index: 0;
+    }
+    .step {
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .step-num {
+      width: 4rem;
+      height: 4rem;
+      border-radius: 50%;
+      background: var(--black);
+      border: 2px solid var(--lime);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.2rem;
+      color: var(--lime);
+    }
+    .step h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 0.5rem;
+    }
+    .step p {
+      font-size: 0.82rem;
+      color: var(--sand);
+      line-height: 1.7;
+      font-weight: 300;
+    }
+
+    /* ══ NEWSLETTER ══ */
+    .newsletter {
+      background: var(--mid);
+      border-top: 3px solid var(--lime);
+      padding: 5rem 2.5rem;
+      text-align: center;
+    }
+    .newsletter h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      letter-spacing: 0.06em;
+      color: var(--white);
+      line-height: 1;
+      margin-bottom: 1rem;
+    }
+    .newsletter p {
+      color: var(--sand);
+      font-size: 0.95rem;
+      margin-bottom: 2.5rem;
+      font-weight: 300;
+    }
+    .nl-form {
+      display: flex;
+      gap: 0;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+    .nl-input {
+      flex: 1;
+      padding: 1rem 1.5rem;
+      background: var(--black);
+      border: none;
+      color: var(--white);
+      font-family: 'Barlow', sans-serif;
+      font-size: 0.9rem;
+      outline: none;
+    }
+    .nl-input::placeholder { color: rgba(245,240,232,0.35); }
+    .nl-btn {
+      padding: 1rem 2rem;
+      background: var(--orange);
+      border: none;
+      color: var(--white);
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 1rem;
+      letter-spacing: 0.15em;
+      cursor: pointer;
+      transition: background 0.25s;
+    }
+    .nl-btn:hover { background: #c95520; }
+
+    /* ══ FOOTER ══ */
+    footer {
+      background: #050505;
+      border-top: 1px solid var(--border);
+      padding: 4rem 2.5rem 2rem;
+    }
+    .footer-top {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 3rem;
+      margin-bottom: 3rem;
+    }
+    .footer-brand h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 2rem;
+      letter-spacing: 0.15em;
+      color: var(--white);
+      margin-bottom: 1rem;
+    }
+    .footer-brand h3 span { color: var(--lime); }
+    .footer-brand p {
+      font-size: 0.85rem;
+      color: var(--sand);
+      line-height: 1.7;
+      font-weight: 300;
+      max-width: 260px;
+    }
+    .footer-col h4 {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-weight: 700;
+      font-size: 0.8rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--white);
+      margin-bottom: 1.2rem;
+    }
+    .footer-col ul { list-style: none; }
+    .footer-col li { margin-bottom: 0.6rem; }
+    .footer-col a {
+      font-size: 0.85rem;
+      color: var(--sand);
+      text-decoration: none;
+      font-weight: 300;
+      transition: color 0.25s;
+    }
+    .footer-col a:hover { color: var(--lime); }
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-top: 2rem;
+      border-top: 1px solid var(--border);
+    }
+    .footer-bottom p {
+      font-size: 0.75rem;
+      color: rgba(201,185,154,0.4);
+      letter-spacing: 0.1em;
+    }
+    .social-links {
+      display: flex;
+      gap: 1.5rem;
+    }
+    .social-links a {
+      font-family: 'Barlow Condensed', sans-serif;
+      font-size: 0.75rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(201,185,154,0.4);
+      text-decoration: none;
+      transition: color 0.25s;
+    }
+    .social-links a:hover { color: var(--lime); }
+
+    /* ══ REVEAL ══ */
+    .reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s ease, transform 0.8s ease; }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+
+    /* ══ RESPONSIVE ══ */
+    @media (max-width: 900px) {
+      .hero { grid-template-columns: 1fr; }
+      .hero::before { display: none; }
+      .hero-right { padding: 3rem 2rem; }
+      .drops-grid { grid-template-columns: repeat(2, 1fr); }
+      .drop-card:first-child { grid-row: span 1; }
+      .cat-grid { grid-template-columns: 1fr 1fr; grid-template-rows: auto; }
+      .cat-item.tall { grid-row: span 1; }
+      .why-strip { grid-template-columns: repeat(2, 1fr); }
+      .bs-grid { grid-template-columns: 1fr 1fr; }
+      .how-steps { grid-template-columns: repeat(2, 1fr); }
+      .how-steps::before { display: none; }
+      .footer-top { grid-template-columns: 1fr 1fr; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">ARCHIVE<span>ROOM</span></div>
+  <ul class="nav-links">
+    <li><a href="#drops">New Drops</a></li>
+    <li><a href="#categories">Categories</a></li>
+    <li><a href="#bestsellers">Best Sellers</a></li>
+    <li><a href="#how">How It Works</a></li>
+  </ul>
+  <button class="nav-cart">🛒 Cart (0)</button>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-left-img"></div>
+    <div class="hero-tag">🔥 New Drop — Summer Haul</div>
+    <div class="hero-num">01</div>
+    <div class="hero-left-content">
+      <h1>Thrift<br/><em>Different.</em></h1>
+      <p>Curated pre-loved kicks at prices that won't break the bank. Every pair tells a story — find yours.</p>
+      <a href="#drops" class="hero-btn">Shop New Drops →</a>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-right-eyebrow">📍 Archive Room · Est. 2019 · Lahore</div>
+    <h2>Over 500+ Pairs In Stock</h2>
+    <p style="font-size:0.9rem;color:var(--sand);line-height:1.7;font-weight:300;max-width:340px;">From vintage Jordans to deadstock Adidas — authenticated, cleaned, and priced honestly. No hype tax. Just heat.</p>
+    <div class="hero-stats">
+      <div class="stat">
+        <div class="stat-num">500+</div>
+        <div class="stat-label">Pairs Available</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">PKR 2K</div>
+        <div class="stat-label">Starting From</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">100%</div>
+        <div class="stat-label">Authenticated</div>
+      </div>
+      <div class="stat">
+        <div class="stat-num">3 Day</div>
+        <div class="stat-label">Returns Accepted</div>
+      </div>
+    </div>
+    <div class="hero-right-img">
+      <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=900&q=80" alt="Shoe wall display"/>
+      <div class="hero-right-img-label">Wall of Heat ↗</div>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track" id="ticker">
+    <span>FREE DELIVERY ON ORDERS OVER PKR 5000</span>
+    <span class="dot">✦</span>
+    <span>AUTHENTICATED PRE-LOVED KICKS</span>
+    <span class="dot">✦</span>
+    <span>NEW DROPS EVERY FRIDAY</span>
+    <span class="dot">✦</span>
+    <span>SIZES UK 5 TO UK 13 IN STOCK</span>
+    <span class="dot">✦</span>
+    <span>3-DAY RETURNS POLICY</span>
+    <span class="dot">✦</span>
+    <span>FREE DELIVERY ON ORDERS OVER PKR 5000</span>
+    <span class="dot">✦</span>
+    <span>AUTHENTICATED PRE-LOVED KICKS</span>
+    <span class="dot">✦</span>
+    <span>NEW DROPS EVERY FRIDAY</span>
+    <span class="dot">✦</span>
+    <span>SIZES UK 5 TO UK 13 IN STOCK</span>
+    <span class="dot">✦</span>
+    <span>3-DAY RETURNS POLICY</span>
+    <span class="dot">✦</span>
+  </div>
+</div>
+
+<!-- NEW DROPS -->
+<section class="drops" id="drops">
+  <div class="section-header reveal">
+    <h2>New <span>Drops</span></h2>
+    <a href="#">View All →</a>
+  </div>
+  <div class="drops-grid reveal">
+
+    <div class="drop-card">
+      <div class="drop-img" style="height:100%;min-height:280px;">
+        <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=700&q=80" alt="Nike Air Max"/>
+      </div>
+      <div class="drop-info">
+        <span class="drop-badge badge-rare">🔥 Rare Find</span>
+        <div class="drop-name">Nike Air Max 97</div>
+        <div class="drop-size">UK 9 · Good Condition</div>
+        <div class="drop-price">
+          <div><span class="price-tag">PKR 8,500</span><span class="price-original">PKR 14,000</span></div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-card">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?w=600&q=80" alt="Adidas"/>
+      </div>
+      <div class="drop-info">
+        <span class="drop-badge badge-new">✦ Just In</span>
+        <div class="drop-name">Adidas Forum Low</div>
+        <div class="drop-size">UK 8 · Like New</div>
+        <div class="drop-price">
+          <div><span class="price-tag">PKR 6,200</span></div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-card">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1606107557195-0e29a4b5b4aa?w=600&q=80" alt="Jordan 1"/>
+      </div>
+      <div class="drop-info">
+        <span class="drop-badge badge-heat">⚡ Heat Alert</span>
+        <div class="drop-name">Jordan 1 Retro High</div>
+        <div class="drop-size">UK 10 · Very Good</div>
+        <div class="drop-price">
+          <div><span class="price-tag">PKR 18,000</span><span class="price-original">PKR 32,000</span></div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-card">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1584735175315-9d5df23be5bc?w=600&q=80" alt="New Balance"/>
+      </div>
+      <div class="drop-info">
+        <span class="drop-badge badge-new">✦ Just In</span>
+        <div class="drop-name">New Balance 550</div>
+        <div class="drop-size">UK 7 · Excellent</div>
+        <div class="drop-price">
+          <div><span class="price-tag">PKR 7,800</span></div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="drop-card">
+      <div class="drop-img">
+        <img src="https://images.unsplash.com/photo-1560769629-975ec94e6a86?w=600&q=80" alt="Puma"/>
+      </div>
+      <div class="drop-info">
+        <span class="drop-badge badge-rare">🔥 Only 1 Left</span>
+        <div class="drop-name">Puma Suede Classic</div>
+        <div class="drop-size">UK 9.5 · Good</div>
+        <div class="drop-price">
+          <div><span class="price-tag">PKR 3,500</span><span class="price-original">PKR 6,000</span></div>
+          <button class="add-btn">Add</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- BRANDS -->
+<div class="brands">
+  <span class="brand-name">NIKE</span>
+  <span class="brand-name">ADIDAS</span>
+  <span class="brand-name">JORDAN</span>
+  <span class="brand-name">NEW BALANCE</span>
+  <span class="brand-name">VANS</span>
+  <span class="brand-name">CONVERSE</span>
+  <span class="brand-name">PUMA</span>
+  <span class="brand-name">REEBOK</span>
+</div>
+
+<!-- CATEGORIES -->
+<section class="categories" id="categories">
+  <div class="section-header reveal">
+    <h2>Shop by <span>Category</span></h2>
+    <a href="#">All Categories →</a>
+  </div>
+  <div class="cat-grid reveal">
+    <div class="cat-item tall">
+      <img src="https://images.unsplash.com/photo-1556906781-9a412961a36e?w=900&q=80" alt="Sneakers"/>
+      <div class="cat-label">
+        <h3>Sneakers</h3>
+        <p>220+ pairs available</p>
+      </div>
+    </div>
+    <div class="cat-item">
+      <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=600&q=80" alt="Running"/>
+      <div class="cat-label">
+        <h3>Running</h3>
+        <p>80+ pairs</p>
+      </div>
+    </div>
+    <div class="cat-item">
+      <img src="https://images.unsplash.com/photo-1536766768598-e09213fdcf22?w=600&q=80" alt="Boots"/>
+      <div class="cat-label">
+        <h3>Boots</h3>
+        <p>60+ pairs</p>
+      </div>
+    </div>
+    <div class="cat-item">
+      <img src="https://images.unsplash.com/photo-1467043237213-65f2da53396f?w=600&q=80" alt="Casual"/>
+      <div class="cat-label">
+        <h3>Casual</h3>
+        <p>140+ pairs</p>
+      </div>
+    </div>
+    <div class="cat-item">
+      <img src="https://images.unsplash.com/photo-1582588678413-dbf45f4823e9?w=600&q=80" alt="Vintage"/>
+      <div class="cat-label">
+        <h3>Vintage</h3>
+        <p>45+ pairs</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY US -->
+<div class="why-strip">
+  <div class="why-card reveal">
+    <span class="why-icon">🔍</span>
+    <h4>Fully Authenticated</h4>
+    <p>Every pair passes our 10-point authentication check before hitting the shelf. No fakes. Ever.</p>
+  </div>
+  <div class="why-card reveal" style="transition-delay:0.1s">
+    <span class="why-icon">🧼</span>
+    <h4>Deep Cleaned</h4>
+    <p>Professionally cleaned and restored so every pair arrives looking its best when it reaches you.</p>
+  </div>
+  <div class="why-card reveal" style="transition-delay:0.2s">
+    <span class="why-icon">💰</span>
+    <h4>Fair Pricing</h4>
+    <p>No inflated resell prices. We keep it honest — great shoes at prices that make sense.</p>
+  </div>
+  <div class="why-card reveal" style="transition-delay:0.3s">
+    <span class="why-icon">🔄</span>
+    <h4>Easy Returns</h4>
+    <p>Not feeling a pair? Return within 3 days, no questions asked. Your satisfaction is the priority.</p>
+  </div>
+</div>
+
+<!-- BEST SELLERS -->
+<section class="bestsellers" id="bestsellers">
+  <div class="section-header reveal">
+    <h2>Best <span>Sellers</span></h2>
+    <a href="#">See All →</a>
+  </div>
+  <div class="bs-grid reveal">
+    <div class="bs-card">
+      <div class="bs-img">
+        <img src="https://images.unsplash.com/photo-1600185365926-3a2ce3cdb9eb?w=700&q=80" alt="Air Force 1"/>
+      </div>
+      <div class="bs-body">
+        <div class="bs-brand">Nike</div>
+        <div class="bs-name">Air Force 1 '07</div>
+        <div class="bs-condition">Condition: Very Good · White/White</div>
+        <div class="bs-footer">
+          <span class="bs-price">PKR 5,500</span>
+          <div class="bs-sizes">
+            <span class="sz">UK7</span>
+            <span class="sz avail">UK8</span>
+            <span class="sz avail">UK9</span>
+            <span class="sz">UK10</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bs-card">
+      <div class="bs-img">
+        <img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?w=700&q=80" alt="Yeezy"/>
+      </div>
+      <div class="bs-body">
+        <div class="bs-brand">Adidas</div>
+        <div class="bs-name">Yeezy Boost 350 V2</div>
+        <div class="bs-condition">Condition: Good · Beluga Colorway</div>
+        <div class="bs-footer">
+          <span class="bs-price">PKR 22,000</span>
+          <div class="bs-sizes">
+            <span class="sz avail">UK8.5</span>
+            <span class="sz">UK9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="bs-card">
+      <div class="bs-img">
+        <img src="https://images.unsplash.com/photo-1514989940723-e8e51635b782?w=700&q=80" alt="Converse"/>
+      </div>
+      <div class="bs-body">
+        <div class="bs-brand">Converse</div>
+        <div class="bs-name">Chuck Taylor All Star</div>
+        <div class="bs-condition">Condition: Excellent · High Top Black</div>
+        <div class="bs-footer">
+          <span class="bs-price">PKR 2,800</span>
+          <div class="bs-sizes">
+            <span class="sz avail">UK6</span>
+            <span class="sz avail">UK7</span>
+            <span class="sz avail">UK8</span>
+            <span class="sz">UK9</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- QUOTE -->
+<div class="quote-sec">
+  <div class="quote-bg-text">ARCHIVE</div>
+  <blockquote>"One man's thrift is another man's <span>grail.</span>"</blockquote>
+  <cite>— The Archive Room Philosophy</cite>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how" id="how">
+  <div class="section-header reveal" style="justify-content:center;text-align:center;display:block;">
+    <h2 style="margin-bottom:0.5rem;">How It <span style="color:var(--lime)">Works</span></h2>
+    <p style="color:var(--sand);font-size:0.9rem;font-weight:300;">Simple. Honest. Fast.</p>
+  </div>
+  <div class="how-steps reveal">
+    <div class="step">
+      <div class="step-num">01</div>
+      <h4>Browse</h4>
+      <p>Scroll our ever-changing inventory of pre-loved kicks, updated every Friday with fresh drops.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <h4>Pick Your Pair</h4>
+      <p>Select your size, check the condition rating, and add to cart. Each listing has full photos.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <h4>We Pack & Ship</h4>
+      <p>Orders dispatched within 24 hours. Nationwide delivery across Pakistan in 2–3 days.</p>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <h4>Wear & Flex</h4>
+      <p>Lace 'em up. If anything's off, our 3-day return window has you covered. Simple.</p>
+    </div>
+  </div>
+</section>
+
+<!-- NEWSLETTER -->
+<div class="newsletter">
+  <h2>GET EARLY ACCESS<br/>TO EVERY DROP</h2>
+  <p>Be the first to know when new pairs hit the Archive. No spam — just heat.</p>
+  <div class="nl-form">
+    <input type="email" class="nl-input" placeholder="your@email.com"/>
+    <button class="nl-btn">JOIN</button>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-top">
+    <div class="footer-brand">
+      <h3>ARCHIVE<span>ROOM</span></h3>
+      <p>Lahore's premier thrift shoe destination. Curated pre-loved kicks, authenticated and priced honestly since 2019.</p>
+    </div>
+    <div class="footer-col">
+      <h4>Shop</h4>
+      <ul>
+        <li><a href="#">New Drops</a></li>
+        <li><a href="#">Sneakers</a></li>
+        <li><a href="#">Running</a></li>
+        <li><a href="#">Boots</a></li>
+        <li><a href="#">Vintage</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Info</h4>
+      <ul>
+        <li><a href="#">About Us</a></li>
+        <li><a href="#">How We Authenticate</a></li>
+        <li><a href="#">Sell To Us</a></li>
+        <li><a href="#">FAQs</a></li>
+      </ul>
+    </div>
+    <div class="footer-col">
+      <h4>Contact</h4>
+      <ul>
+        <li><a href="#">Instagram</a></li>
+        <li><a href="#">WhatsApp</a></li>
+        <li><a href="#">TikTok</a></li>
+        <li><a href="#">archiveroom.pk</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2026 Archive Room · All Rights Reserved · Lahore, Pakistan</p>
+    <div class="social-links">
+      <a href="#">Instagram</a>
+      <a href="#">WhatsApp</a>
+      <a href="#">TikTok</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => {
+      if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+  // Cart counter
+  let cart = 0;
+  const cartBtn = document.querySelector('.nav-cart');
+  document.querySelectorAll('.add-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      cart++;
+      cartBtn.textContent = `🛒 Cart (${cart})`;
+      btn.textContent = '✓ Added';
+      btn.style.background = 'var(--lime)';
+      btn.style.color = 'var(--white)';
+      btn.style.borderColor = 'var(--lime)';
+      setTimeout(() => { btn.textContent = 'Add'; btn.style.background = ''; btn.style.color = ''; btn.style.borderColor = ''; }, 1500);
+    });
+  });
+</script>
+</body>
+</html>
